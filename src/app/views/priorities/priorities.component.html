@@ -1,0 +1,85 @@
+<div *ngFor="let priority of priorities; let index = index"  class="vertical-middle priorities">
+  <ng-template [ngTemplateOutlet]="getTemplate(priority)" [ngTemplateOutletContext]="{ $implicit: priority }"></ng-template>
+</div>
+
+<p *ngIf="!isNewPriority; else editTmpl" (click)="onAddPriority()" class="link little">
+  Добавить приоритет
+</p>
+<!-- <ng-container *ngIf="newPriority">
+  <ng-template #add *ngTemplateOutlet="editTmpl"></ng-template>
+</ng-container> -->
+
+
+<ng-template #displayTmpl let-priority>
+    <div class="row align-self-baseline">
+        <div class="col-7">
+          <a (click)="onEditPriority(priority)" class="pointer">
+            {{ priority.title }}</a
+          >
+        </div>
+    
+        <div class="col-2 text-right">
+          <span
+            [(colorPicker)]="priority.color"
+            [style.background]="priority.color"
+            class="color-circle"
+          ></span>
+        </div>
+    
+        <div class="col-1 text-left">
+          <button [disabled]="isNewPriority" mat-icon-button (click)="delete(priority)" class="pointer gray">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+    
+        <div class="col-1 text-left">
+          <button [disabled]="isNewPriority" mat-icon-button (click)="onEditPriority(priority)" class="pointer gray ">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </div>
+</ng-template>
+
+<ng-template #editTmpl>
+    <div class="row d-flex align-items-center">
+        <div class="col-6">
+            <mat-form-field>
+                <mat-label>Название</mat-label>
+                <input
+                  #inputTitle
+                  matInput
+                  maxlength="15"
+                  [(ngModel)]="selected.title"
+                  (keydown.enter)="savePriority()"
+                />
+            
+                <button
+                  *ngIf="selected.title.trim().length > 0"
+                  class="clear-icon size25"
+                  mat-button
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="selected.title = ''"
+                >
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </mat-form-field>
+        </div>
+    
+          <div class="col-6 d-flex align-items-center">
+            <button
+              mat-raised-button
+              color="primary"
+              class="actions-buttons"
+              (click)="savePriority()"
+              [disabled]="inputTitle.value.trim().length == 0">
+              Сохранить
+            </button>
+        
+            <button mat-raised-button class="actions-buttons" (click)="reset()">Отмена</button>
+          </div>
+  
+      </div>
+</ng-template>
+

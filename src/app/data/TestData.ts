@@ -1,8 +1,11 @@
-import { Category } from '../model/Category';
-import { Priority } from '../model/Priority';
-import { Task } from '../model/Task';
+// тестовые данные в виде массивов (заменяют таблицы БД)
+
+import {Category} from '../model/Category';
+import {Priority} from '../model/Priority';
+import {Task} from '../model/Task';
 
 export class TestData {
+
     static categories: Category[] = [
         {id: 1, title: 'Работа'},
         {id: 2, title: 'Семья'},
@@ -190,4 +193,6 @@ export class TestData {
         }
 
     ];
+
 }
+
